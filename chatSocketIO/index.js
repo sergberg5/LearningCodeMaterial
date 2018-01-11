@@ -1,10 +1,13 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+app.set('port', 3000);
+app.use('/www', express.static(__dirname + '/www'));
+// Routing
+app.get('/', function(request, response) {
+  response.sendFile(path.join(__dirname, 'index.html'));
 });
+
 
 io.on('connection', function(socket){
   console.log('a user connected');
@@ -14,18 +17,13 @@ io.on('connection', function(socket){
 });
 
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
+  socket.on('message', function(msg){
     console.log('message: ' + msg);
-    console.log("OMG a message was received");
   });
 });
 
 io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  socket.on('message', function(msg){
+    io.emit('message', 'FROM: SERVER TO: ALL CLIENTS');
   });
-});
-
-http.listen(3000, function(){
-  console.log('listening on *:3000');
 });
