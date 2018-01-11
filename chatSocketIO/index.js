@@ -3,7 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 app.set('port', 3000);
 app.use('/www', express.static(__dirname + '/www'));
-// Routing
+// Routing NOT WORKING
 app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname, 'index.html'));
 });
