@@ -13,7 +13,6 @@ document.addEventListener('keydown', function(event) {
   switch (event.keyCode) {
     case 65: // A
       movement.left = true;
-      console.log("A is pressed");
       break;
     case 87: // W
       movement.up = true;
@@ -52,13 +51,17 @@ var canvas = document.getElementById('canvas');
 canvas.width = 800;
 canvas.height = 600;
 var context = canvas.getContext('2d');
+
 socket.on('state', function(players) {
   context.clearRect(0, 0, 800, 600);
-  context.fillStyle = 'green';
+  context.fillStyle = 'red';
   for (var id in players) {
     var player = players[id];
     context.beginPath();
     context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
+    context.rect(300,300,150,100);
     context.fill();
   }
 });
+
+
