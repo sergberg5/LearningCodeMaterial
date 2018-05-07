@@ -24,6 +24,10 @@
     <script>
       $(function () {
         var socket = io();
+        socket.on('username_prompt', function() {
+          	var person = prompt("Please enter your nickname", "");
+		  	socket.emit('nickname', person);
+          });
         $('form').submit(function(){
           socket.emit('chat message', $('#m').val());
           $('#m').val('');

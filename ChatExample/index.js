@@ -8,12 +8,20 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  io.emit('chat message', "User Connectedy");
+  var username = "";
+  if(socket.username == "" || socket.username == null){
+  	socket.emit('username_prompt', "");
+  }
+  socket.on('nickname', function(nickname){
+  	socket.username = nickname;
+  	io.emit('chat message', socket.username + " Connected");
+  });
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  	if(socket.username == "" || socket.username == null){}
+  	else{ io.emit('chat message', socket.username + ": " + msg);}
   });
   socket.on('disconnect', function(){
-    io.emit('chat message', "User Disconnected");	
+    io.emit('chat message', socket.username + " Disconnected");	
   });
 });
 
