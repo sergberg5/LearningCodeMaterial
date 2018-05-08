@@ -9,9 +9,11 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   var username = "";
+
   if(socket.username == "" || socket.username == null){
   	socket.emit('username_prompt', "");
   }
+
   socket.on('nickname', function(nickname){
   	socket.username = nickname;
   	io.emit('chat message', socket.username + " Connected");
